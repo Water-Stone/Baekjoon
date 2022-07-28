@@ -8,12 +8,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
         board = new boolean[N][N];
-        for (boolean[] row : board)
-            Arrays.fill(row, false);
 
         // K개의 사과를 board 위에 놓자.
         int K = Integer.parseInt(br.readLine());
@@ -41,18 +38,6 @@ public class Main {
 
         // the snake is moving
         int time = 0;
-//        while (!move(currDir)) {
-//            time++;
-//            if (moves.containsKey(time)) {
-//                if (moves.get(time) == 'L') {
-//                    currDir--;
-//                    if (currDir < 0) currDir = 3;
-//                } else if (moves.get(time) == 'D') {
-//                    currDir++;
-//                    if (currDir > 3) currDir = 0;
-//                }
-//            }
-//        }
         while (move(currDir)) {
             // 시간 맞춰서 방향 전환
             time++;
@@ -72,7 +57,6 @@ public class Main {
     }
 
     static boolean move(int dir) {
-
         int[] pos = currSnakePos.peekFirst().clone();
 
         // 이동 방향에 따른 벽 체크
@@ -95,23 +79,17 @@ public class Main {
                 pos[0]--;
                 break;
         }
-//        currSnakePos.forEach((snakeBody)->{
-//            if(snakeBody[0] == pos[0] && snakeBody[1] == pos[1])
-//                return false;
-//        });
-        for(int[] snakeBody : currSnakePos){
-            if(snakeBody[0] == pos[0] && snakeBody[1] == pos[1]){
-//                System.out.println("body check false");
-                return false;
-            }
 
+        for (int[] snakeBody : currSnakePos) {
+            if (snakeBody[0] == pos[0] && snakeBody[1] == pos[1])
+                return false;
         }
 
-        if(board[pos[0]][pos[1]]){
+        if (board[pos[0]][pos[1]]) {
             // isApple = true
             board[pos[0]][pos[1]] = false;
             currSnakePos.addFirst(pos);
-        }else{
+        } else {
             // isApple = false
             currSnakePos.addFirst(pos);
             currSnakePos.pollLast();
