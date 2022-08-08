@@ -7,25 +7,30 @@ public class Main {
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseUnsignedInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
         List<Integer> trees = new ArrayList<>(N);
+        long sumOfCuts;
+
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            trees.add(Integer.parseUnsignedInt(st.nextToken()));
+            int num = Integer.parseInt(st.nextToken());
+            trees.add(num);
+//            if (high < num)
+//                high = num;
         }
 
         Collections.sort(trees);
 
-        long sumOfCuts = 0;
         int high = trees.get(N - 1);
         int low = 0;
         int mid;
+
         while (low + 1 < high) {
             mid = (low + high) / 2;
-
             sumOfCuts = 0;
+
             for (int i = N - 1; i >= 0; i--)
                 if (trees.get(i) > mid)
                     sumOfCuts += trees.get(i) - mid;
