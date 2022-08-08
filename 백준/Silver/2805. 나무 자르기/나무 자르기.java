@@ -11,21 +11,20 @@ public class Main {
 
         List<Integer> trees = new ArrayList<>(N);
         long sumOfCuts;
-
+        int high=0, low, mid;
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             int num = Integer.parseInt(st.nextToken());
             trees.add(num);
-//            if (high < num)
-//                high = num;
+            if (high < num)
+                high = num;
         }
 
-        Collections.sort(trees);
+//        Collections.sort(trees);
 
-        int high = trees.get(N - 1);
-        int low = 0;
-        int mid;
+//        high = trees.get(N - 1);
+        low = 0;
 
         while (low + 1 < high) {
             mid = (low + high) / 2;
@@ -34,7 +33,7 @@ public class Main {
             for (int i = N - 1; i >= 0; i--)
                 if (trees.get(i) > mid)
                     sumOfCuts += trees.get(i) - mid;
-                else break;
+//                else break;
 
             if (sumOfCuts >= M) low = mid;
             else high = mid;
