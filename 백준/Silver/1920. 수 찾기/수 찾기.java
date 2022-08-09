@@ -12,7 +12,8 @@ public class Main {
         for (int i = 0; i < N; i++) {
             numbers[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(numbers);
+//        Arrays.sort(numbers);
+        numbers = Arrays.stream(numbers).sorted().toArray();
 
         int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
@@ -31,10 +32,9 @@ public class Main {
     private static boolean binarySearch(int[] numbers, int x) {
         int lo = 0;
         int hi = numbers.length - 1;
-        int mid = (lo + hi) / 2;
 
         while (lo < hi) {
-            mid = (lo + hi) / 2;
+            int mid = (lo + hi) / 2;
 
             if (x < numbers[mid]) {
                 hi = mid - 1;
