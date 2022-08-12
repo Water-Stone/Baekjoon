@@ -26,6 +26,7 @@ public class Main {
 
             if (sum >= S) {
                 shortest = Math.min(shortest, end - start);
+                if(shortest == 1) break;
                 sum -= list.get(start++);
             } else {
                 sum += list.get(end++);
