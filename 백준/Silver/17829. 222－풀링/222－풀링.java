@@ -1,6 +1,5 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -19,27 +18,27 @@ public class Main {
         System.out.println(divideAndConquer(matrix));
     }
 
-    private static int divideAndConquer(int[] arr) {
-        if (arr.length == 4) {
-            Arrays.sort(arr);
-            return arr[2];
+    private static int divideAndConquer(int[] oriMatrix) {
+        if (oriMatrix.length == 4) {
+            Arrays.sort(oriMatrix);
+            return oriMatrix[2];
         }
 
-        int oriN = (int) Math.sqrt(arr.length);
+        int oriN = (int) Math.sqrt(oriMatrix.length);
         int dividedN = oriN >> 1;
-        int[] tempMatrix = new int[dividedN * dividedN];
+        int[] dividedMatrix = new int[dividedN * dividedN];
         for (int i = 0; i < dividedN; i++) {
             for (int j = 0; j < dividedN; j++) {
                 int[] temp = new int[4];
-                int k = i << 1;
-                int p = j << 1;
-                temp[0] = arr[k * oriN + p];
-                temp[1] = arr[k * oriN + p + 1];
-                temp[2] = arr[(k + 1) * oriN + p];
-                temp[3] = arr[(k + 1) * oriN + p + 1];
-                tempMatrix[i * dividedN + j] = divideAndConquer(temp);
+                int p = i << 1;
+                int q = j << 1;
+                temp[0] = oriMatrix[p * oriN + q];
+                temp[1] = oriMatrix[p * oriN + q + 1];
+                temp[2] = oriMatrix[(p + 1) * oriN + q];
+                temp[3] = oriMatrix[(p + 1) * oriN + q + 1];
+                dividedMatrix[i * dividedN + j] = divideAndConquer(temp);
             }
         }
-        return divideAndConquer(tempMatrix);
+        return divideAndConquer(dividedMatrix);
     }
 }
