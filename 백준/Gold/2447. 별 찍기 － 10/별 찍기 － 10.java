@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 
 public class Main {
     static char[][] board;
@@ -10,38 +11,30 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
         br.close();
         board = new char[N][N];
-
-        drawStars(N, 0, 0, false);
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                bw.write(board[i][j]);
-            }
-            bw.write("\n");
+        for (int i = 0; i < N; ++i) {
+            Arrays.fill(board[i], ' ');
         }
-        bw.flush();
-        bw.close();
+
+        drawStars(N, 0, 0);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            sb.append(board[i]).append("\n");
+        }
+        System.out.println(sb);
     }
 
-    private static void drawStars(int N, int r, int c, boolean isBlank) {
-        if (isBlank) {
-            for (int i = r; i < r + N; i++) {
-                for (int j = c; j < c + N; j++) {
-                    board[i][j] = ' ';
-                }
-            }
-            return;
-        }
-
+    private static void drawStars(int N, int r, int c) {
         if (N == 1) {
             board[r][c] = '*';
             return;
         }
 
-        int cnt = 0;
-        for (int i = r; i < r + N; i += N / 3) {
-            for (int j = c; j < c + N; j += N / 3) {
-                drawStars(N / 3, i, j, ++cnt == 5);
+        int newN = N / 3;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == 1 && j == 1) continue;
+                drawStars(newN, r + (i * newN), c + (j * newN));
             }
         }
     }
