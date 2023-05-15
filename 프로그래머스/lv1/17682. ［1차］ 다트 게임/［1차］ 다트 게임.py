@@ -1,49 +1,29 @@
 # [1차] 다트 게임
+import re
+
+
 def solution(dartResult):
-    answer = 0
-    # [점수, 제곱, 스타상, 아차상]
-    result_list = [[0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 1]]
+    valid = re.compile(r'([0-9]|10)([SDT])([\*\#]?)')
+    dart_results = valid.findall(dartResult)
 
-    curr_result_idx = 0
-    isTen = False
-    for i in range(len(dartResult)):
-        if isTen:
-            isTen = False
-            continue
+    results = [0, 0, 0]
+    for i in range(3):
+        p = -1
+        if dart_results[i][1] == 'S':
+            p = 1
+        elif dart_results[i][1] == 'D':
+            p = 2
+        elif dart_results[i][1] == 'T':
+            p = 3
 
-        char = dartResult[i]
-        if char.isdigit():
-            point = 0
-            if char == '1':
-                if dartResult[i + 1] == '0':
-                    point = 10
-                    isTen = True
-                else:
-                    point = 1
-            else:
-                point = int(char)
-            result_list[curr_result_idx][0] = point
-        elif char.isalpha():
-            if char == 'S':
-                result_list[curr_result_idx][1] = 1
-            elif char == 'D':
-                result_list[curr_result_idx][1] = 2
-            elif char == 'T':
-                result_list[curr_result_idx][1] = 3
-            if i != len(dartResult) - 1:
-                if dartResult[i + 1].isdigit():
-                    curr_result_idx += 1
-        else:
-            if char == '*':
-                result_list[curr_result_idx][2] *= 2
-                if curr_result_idx >= 1:
-                    result_list[curr_result_idx - 1][2] *= 2
-            elif char == '#':
-                result_list[curr_result_idx][3] *= -1
-            curr_result_idx += 1
+        results[i] = int(dart_results[i][0]) ** p
 
-    # [점수, 제곱, 스타상, 아차상]
-    for result in result_list:
-        answer += pow(result[0], result[1])*result[2]*result[3]
+        if dart_results[i][2] == '*':
+            for j in range(i, i - 2, -1):
+                if j < 0:
+                    break
+                results[j] *= 2
+        elif dart_results[i][2] == '#':
+            results[i] *= (-1)
 
-    return answer
+    return sum(results)
