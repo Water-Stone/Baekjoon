@@ -1,3 +1,5 @@
+import sys
+
 def is_possible_channel(channel, broken_buttons):
     if channel == 0:
         return '0' not in broken_buttons
@@ -24,9 +26,9 @@ def find_min_presses(target_channel, broken_buttons):
 
 
 if __name__ == "__main__":
-    target_channel = int(input())
-    num_broken_buttons = int(input())
-    broken_buttons = set(input().split() if num_broken_buttons > 0 else [])
+    target_channel = int(sys.stdin.readline().rstrip())
+    num_broken_buttons = int(sys.stdin.readline().rstrip())
+    broken_buttons = set(sys.stdin.readline().split()) if num_broken_buttons > 0 else []
 
     result = find_min_presses(target_channel, broken_buttons)
     print(result)
