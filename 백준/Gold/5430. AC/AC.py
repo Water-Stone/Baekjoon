@@ -7,17 +7,17 @@ write = sys.stdout.write
 if __name__ == "__main__":
     T = int(read().rstrip())
     for t in range(T):
-        rev_cnt = 0
+        is_rev = False
         p = read().rstrip()
         n = int(read().rstrip())
         if n:
             q = deque(read().rstrip()[1:-1].split(','))
             for cmd in p:
                 if cmd == 'R':
-                    rev_cnt += 1
+                    is_rev = not is_rev
                 elif cmd == 'D':
                     if q:
-                        if rev_cnt % 2:
+                        if is_rev:
                             q.pop()
                         else:
                             q.popleft()
@@ -25,7 +25,7 @@ if __name__ == "__main__":
                         write('error\n')
                         break
             else:
-                if rev_cnt % 2:
+                if is_rev:
                     q.reverse()
                 write('[' + ','.join(q) + ']\n')
         else:
